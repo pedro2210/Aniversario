@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestro Aniversario</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffebee;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        header {
+            background-color: #e91e63;
+            color: white;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+        
+        .heart {
+            color: #e91e63;
+            font-size: 1.5em;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        
+        .photo-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .photo-container {
+            position: relative;
+            cursor: pointer;
+            width: 200px;
+            height: 200px;
+        }
+        
+        .photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+        
+        .photo:hover {
+            transform: scale(1.05);
+        }
+        
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            background-color: rgba(233, 30, 99, 0.7);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .photo-container:hover .play-icon {
+            opacity: 1;
+        }
+        
+        .message {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: left;
+            line-height: 1.6;
+        }
+        
+        .countdown {
+            font-size: 1.2em;
+            margin: 20px 0;
+            color: #e91e63;
+            font-weight: bold;
+        }
+        
+        footer {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e91e63;
+            color: white;
+            border-radius: 0 0 10px 10px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #e91e63;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            margin: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #c2185b;
+        }
+        
+        .audio-player-container {
+            margin: 20px auto;
+            max-width: 300px;
+        }
+        
+        .now-playing {
+            color: #e91e63;
+            font-weight: bold;
+            margin-top: 10px;
+            min-height: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Feliz Aniversario <span class="heart">❤</span></h1>
+            <p>Celebrando nuestro amor</p>
+        </header>
+        
+        <div class="countdown" id="countdown">
+            Juntos por: <span id="years"></span> años y <span id="months"></span> meses
+        </div>
+        
+        <div class="photo-gallery">
+            <!-- Foto 1 con canción -->
+            <div class="photo-container" onclick="playSong('s1.mp3', 'Nuestra Canción Especial')">
+                <img src="f1.jpg" alt="Nuestro primer encuentro" class="photo">
+                <div class="play-icon">▶</div>
+            </div>
+            
+            <!-- Foto 2 con canción -->
+            <div class="photo-container" onclick="playSong('s2.mp3', 'Canción de Nuestro Viaje')">
+                <img src="f2.jpg" alt="Nuestro primer viaje juntos" class="photo">
+                <div class="play-icon">▶</div>
+            </div>
+            
+            <!-- Foto 3 con canción -->
+            <div class="photo-container" onclick="playSong('s3.mp3', 'Melodía del Aniversario')">
+                <img src="f3.jpg" alt="Celebrando nuestro amor" class="photo">
+                <div class="play-icon">▶</div>
+            </div>
+            
+            <!-- Foto 4 con canción -->
+            <div class="photo-container" onclick="playSong('s4.mp3', 'Nuestro Tema Favorito')">
+                <img src="f4.jpg" alt="Momentos cotidianos felices" class="photo">
+                <div class="play-icon">▶</div>
+            </div>
+        </div>
+        
+        <!-- Reproductor de audio único -->
+        <div class="audio-player-container">
+            <audio id="audioPlayer" controls>
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+            <div id="now-playing" class="now-playing"></div>
+        </div>
+        
+        <div class="message">
+            <h2>Para la persona más especial de mi vida:</h2>
+            <p>Hoy celebramos otro año de amor, risas, aventuras y crecimiento juntos. Cada día a tu lado es un regalo que atesoro profundamente en mi corazón.</p>
+            <p>Recuerdo como si fuera ayer el momento en que nos conocimos, y ahora, mirando atrás, no puedo evitar sonreír al ver todo lo que hemos construido juntos.</p>
+            <p>Eres mi compañero(a) de vida, mi mejor amigo(a), mi confidente y mi mayor apoyo. Gracias por estar a mi lado en los momentos buenos y en los no tan buenos.</p>
+            <p>Que este aniversario sea solo el primero de muchos más que vendrán, llenos de amor, felicidad y sueños cumplidos.</p>
+            <p>Con todo mi amor,</p>
+            <p><strong>Atte: El amor de tu vida</strong></p>
+        </div>
+        
+        <div>
+            <a href="mensajes.html" class="btn">Mensajes Especiales</a>
+        </div>
+        
+        <footer>
+            <p>Hecho con ❤ para ti, en nuestro aniversario</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Calcula el tiempo que han estado juntos en años y meses
+        function updateCountdown() {
+            const anniversaryDate = new Date("2016-10-22");
+            const today = new Date();
+            
+            let months = (today.getFullYear() - anniversaryDate.getFullYear()) * 12;
+            months += today.getMonth() - anniversaryDate.getMonth();
+            
+            if (today.getDate() < anniversaryDate.getDate()) {
+                months--;
+            }
+            
+            const years = Math.floor(months / 12);
+            const remainingMonths = months % 12;
+            
+            document.getElementById("years").textContent = years;
+            document.getElementById("months").textContent = remainingMonths;
+        }
+        
+        // Función para reproducir canciones al hacer clic en fotos
+        function playSong(songFile, songTitle) {
+            const audioPlayer = document.getElementById('audioPlayer');
+            const nowPlaying = document.getElementById('now-playing');
+            
+            // Cambiar la fuente de audio
+            audioPlayer.src = songFile;
+            
+            // Mostrar qué canción está sonando
+            nowPlaying.textContent = "Reproduciendo: " + songTitle;
+            
+            // Intentar reproducir (puede requerir interacción del usuario en algunos navegadores)
+            audioPlayer.play().catch(error => {
+                console.log("Reproducción automática bloqueada:", error);
+                nowPlaying.textContent += " (Haz clic en play para reproducir)";
+            });
+        }
+        
+        // Actualizar el contador al cargar y cada día
+        updateCountdown();
+        setInterval(updateCountdown, 86400000);
+    </script>
+</body>
+</html>
